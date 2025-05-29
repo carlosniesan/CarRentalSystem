@@ -5,6 +5,7 @@ import carlosniesan.carrentalsystem.dto.RentalResponseDTO;
 import carlosniesan.carrentalsystem.dto.RentCarRequestDTO;
 import carlosniesan.carrentalsystem.dto.ReturnCarRequestDTO;
 import carlosniesan.carrentalsystem.dto.ReturnResponseDTO;
+import carlosniesan.carrentalsystem.mapper.RentalMapper;
 import carlosniesan.carrentalsystem.model.Car;
 import carlosniesan.carrentalsystem.model.Customer;
 import carlosniesan.carrentalsystem.model.Rental;
@@ -18,7 +19,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RentalService {
@@ -27,29 +27,30 @@ public class RentalService {
     private final CarService carService;
     private final CustomerService customerService;
     private final PriceCalculationService priceCalculationService;
+    private final RentalMapper rentalMapper;
     
     @Autowired
     public RentalService(
             RentalRepository rentalRepository,
             CarService carService,
             CustomerService customerService,
-            PriceCalculationService priceCalculationService) {
+            PriceCalculationService priceCalculationService,
+            RentalMapper rentalMapper) {
         this.rentalRepository = rentalRepository;
         this.carService = carService;
         this.customerService = customerService;
         this.priceCalculationService = priceCalculationService;
+        this.rentalMapper = rentalMapper;
     }
     
     public List<RentalDTO> getAllRentals() {
-        return rentalRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return rentalMapper.toDTOList(rentalRepository.findAll());
     }
     
     public RentalDTO getRentalById(Long id) {
         Rental rental = rentalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Rental not found with id: " + id));
-        return convertToDTO(rental);
+        return rentalMapper.toDTO(rental);
     }
     
     @Transactional
@@ -97,9 +98,7 @@ public class RentalService {
         // Add loyalty points to customer
         customerService.addLoyaltyPoints(customer.getId(), totalLoyaltyPoints);
         
-        List<RentalDTO> rentalDTOs = rentals.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        List<RentalDTO> rentalDTOs = rentalMapper.toDTOList(rentals);
         
         return new RentalResponseDTO(rentalDTOs, totalPrice, totalLoyaltyPoints);
     }
@@ -136,22 +135,6 @@ public class RentalService {
         
         Rental updatedRental = rentalRepository.save(rental);
         
-        return new ReturnResponseDTO(convertToDTO(updatedRental), extraDays, extraCharge);
-    }
-    
-    private RentalDTO convertToDTO(Rental rental) {
-        return new RentalDTO(
-                rental.getId(),
-                rental.getCustomer().getId(),
-                rental.getCar().getId(),
-                rental.getStartDate(),
-                rental.getPlannedEndDate(),
-                rental.getActualEndDate(),
-                rental.getPlannedDays(),
-                rental.getInitialPrice(),
-                rental.getExtraCharges(),
-                rental.getStatus(),
-                rental.getLoyaltyPointsEarned()
-        );
+        return new ReturnResponseDTO(rentalMapper.toDTO(updatedRental), extraDays, extraCharge);
     }
 }
