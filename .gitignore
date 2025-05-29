@@ -3,3 +3,5 @@ node_modules
 
 # Project exclude paths
 /target/
+/.idea/
+/.bolt/
