@@ -48,7 +48,7 @@ public class PriceCalculationService {
     
     private double calculateSUVPrice(int days) {
         double basePrice = CarType.SUV.getBasePrice();
-        double totalPrice = 0;
+        double totalPrice;
         
         // For the first 7 days: SUV price per day
         if (days <= 7) {
@@ -66,7 +66,7 @@ public class PriceCalculationService {
     
     private double calculateSmallPrice(int days) {
         double basePrice = CarType.SMALL.getBasePrice();
-        double totalPrice = 0;
+        double totalPrice;
         
         // For the first 7 days: small price per day
         if (days <= 7) {
