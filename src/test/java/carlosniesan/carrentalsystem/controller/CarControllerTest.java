@@ -40,7 +40,7 @@ class CarControllerTest {
         
         ResponseEntity<List<CarDTO>> response = carController.getAllCars();
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(2, response.getBody().size());
         verify(carService, times(1)).getAllCars();
     }
@@ -55,7 +55,7 @@ class CarControllerTest {
         
         ResponseEntity<List<CarDTO>> response = carController.getAvailableCars();
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(1, response.getBody().size());
         verify(carService, times(1)).getAvailableCars();
     }
