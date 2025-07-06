@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 class CarControllerTest {
@@ -41,14 +42,15 @@ class CarControllerTest {
         ResponseEntity<List<CarDTO>> response = carController.getAllCars();
         
         assertEquals(200, response.getStatusCode().value());
+        assertNotNull(response.getBody());
         assertEquals(2, response.getBody().size());
         verify(carService, times(1)).getAllCars();
     }
 
     @Test
     void getAvailableCars() {
-        List<CarDTO> availableCars = Arrays.asList(
-            new CarDTO(1L, "BMW", "7 Series", "ABC123", CarType.PREMIUM, true)
+        List<CarDTO> availableCars = List.of(
+                new CarDTO(1L, "BMW", "7 Series", "ABC123", CarType.PREMIUM, true)
         );
         
         when(carService.getAvailableCars()).thenReturn(availableCars);
@@ -56,6 +58,7 @@ class CarControllerTest {
         ResponseEntity<List<CarDTO>> response = carController.getAvailableCars();
         
         assertEquals(200, response.getStatusCode().value());
+        assertNotNull(response.getBody());
         assertEquals(1, response.getBody().size());
         verify(carService, times(1)).getAvailableCars();
     }
