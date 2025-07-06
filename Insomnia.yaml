@@ -1,0 +1,311 @@
+type: collection.insomnia.rest/5.0
+name: CarRentalSystem
+meta:
+  id: wrk_c97c4537982443b8b08e2eca7ef86bfa
+  created: 1751828407541
+  modified: 1751828522900
+  description: ""
+collection:
+  - name: Car Management
+    meta:
+      id: fld_0d875c8f562243c89660a2ec4d40251b
+      created: 1751830143362
+      modified: 1751830155843
+      sortKey: -1751830143465
+      description: APIs for managing car inventory
+    children:
+      - url: "{{ _.base_url }}/api/cars"
+        name: Get all cars
+        meta:
+          id: req_76883444e8e047988e58b9ed7e5865b4
+          created: 1751830143372
+          modified: 1751830182562
+          isPrivate: false
+          description: Retrieve all cars in the inventory
+          sortKey: -1751830143480
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/cars"
+        name: Add a new car
+        meta:
+          id: req_06b668316e114b8f80fc2f7807f63e6d
+          created: 1751830143373
+          modified: 1751830143373
+          isPrivate: false
+          description: Add a new car to the inventory
+          sortKey: -1751830143373
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "id": 0,
+              "brand": "string",
+              "model": "string",
+              "licensePlate": "string",
+              "type": "string",
+              "available": true
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/cars/{{ _.id }}"
+        name: Get car by ID
+        meta:
+          id: req_e5d22bead1864e7f8382f4b08f3713ff
+          created: 1751830143378
+          modified: 1751830143378
+          isPrivate: false
+          description: Retrieve a car by its ID
+          sortKey: -1751830143378
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/cars/available"
+        name: Get available cars
+        meta:
+          id: req_99854a92eb364fac91455774fe8cd66e
+          created: 1751830143380
+          modified: 1751830143380
+          isPrivate: false
+          description: Retrieve all cars that are available for rent
+          sortKey: -1751830143380
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Customer Management
+    meta:
+      id: fld_a5dcff6116334e2e8917610d4d078596
+      created: 1751830143364
+      modified: 1751830157224
+      sortKey: -1751830143415
+      description: APIs for managing customers
+    children:
+      - url: "{{ _.base_url }}/api/customers"
+        name: Get all customers
+        meta:
+          id: req_ed5e54766b334ac1928ea66b86adc3f5
+          created: 1751830143369
+          modified: 1751830228572
+          isPrivate: false
+          description: Retrieve all customers
+          sortKey: -1751830143477
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customers"
+        name: Add a new customer
+        meta:
+          id: req_6c0a01e9a253403991f52bb7ce5a1e83
+          created: 1751830143370
+          modified: 1751830143370
+          isPrivate: false
+          description: Add a new customer
+          sortKey: -1751830143370
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "id": 0,
+              "name": "string",
+              "email": "string",
+              "loyaltyPoints": 0
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customers/{{ _.id }}"
+        name: Get customer by ID
+        meta:
+          id: req_ab9441ed15d842cc9c7cb8f53756dd2a
+          created: 1751830143377
+          modified: 1751830143377
+          isPrivate: false
+          description: Retrieve a customer by their ID
+          sortKey: -1751830143377
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Rental Management
+    meta:
+      id: fld_6045d93ceae84b62a311bb67c47cecaa
+      created: 1751830143365
+      modified: 1751830143365
+      sortKey: -1751830143365
+      description: APIs for managing car rentals
+    children:
+      - url: "{{ _.base_url }}/api/rentals/return"
+        name: Return a car
+        meta:
+          id: req_90fe478c168042ce8b059349aecf3fc6
+          created: 1751830143366
+          modified: 1751841122685
+          isPrivate: false
+          description: Return a rented car and calculate any surcharges for late returns
+          sortKey: -1751830143366
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "rentalId": 1,
+              "returnDate": "2025-07-10"
+            }
+        headers:
+          - disabled: false
+            name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/rentals/rent"
+        name: Rent cars
+        meta:
+          id: req_d26c23fb46e14fe199081acbb90d0c09
+          created: 1751830143368
+          modified: 1751831364318
+          isPrivate: false
+          description: Rent one or more cars for a specified number of days and calculate
+            the price
+          sortKey: -1751830143368
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "customerId": 1,
+              "carIds": [
+                1
+              ],
+              "days": 10
+            }
+        headers:
+          - disabled: false
+            name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/rentals"
+        name: Get all rentals
+        meta:
+          id: req_03ea4557eb694d07b0ce0e37ad31a45e
+          created: 1751830143374
+          modified: 1751830240678
+          isPrivate: false
+          description: Retrieve all rentals
+          sortKey: -1751830143476
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/rentals/1"
+        name: Get rental by ID
+        meta:
+          id: req_afb3a393808a4f03b9756127b528a00b
+          created: 1751830143376
+          modified: 1751831438321
+          isPrivate: false
+          description: Retrieve a rental by its ID
+          sortKey: -1751830143376
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_bdcd7ad7ec4caeb348af12f64f5f17d503af24b2
+    created: 1751828407546
+    modified: 1751828407546
+environments:
+  name: Base Environment
+  meta:
+    id: env_bdcd7ad7ec4caeb348af12f64f5f17d503af24b2
+    created: 1751828407544
+    modified: 1751830143357
+    isPrivate: false
+  data:
+    base_url: "{{ _.scheme }}://{{ _.host }}{{ _.base_path }}"
+  subEnvironments:
+    - name: OpenAPI env localhost:8080
+      meta:
+        id: env_2a912c9f83f94c849d62d413fa854827
+        created: 1751830143360
+        modified: 1751830143360
+        isPrivate: false
+        sortKey: 1751830143360
+      data:
+        scheme: http
+        base_path: ""
+        host: localhost:8080
